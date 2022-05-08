@@ -1,0 +1,35 @@
+<!--pages/business/business.wxml-->
+<!-- <text>pages/business/business.wxml</text> -->
+<view wx:if="{{shop == ''}}">
+  <van-cell-group>
+    <van-field model:value="{{ businesss_name }}" label="店铺" placeholder="请输入店铺名" border="{{ false }}" />
+    <van-field model:value="{{ dining_room }}" label="所属食堂" placeholder="请输入入驻食堂" border="{{ false }}" />
+  </van-cell-group>
+  <van-button bind:click="commit" round type="info" block>确认并提交</van-button>
+</view>
+<view wx:else>
+  <navigator url='/pages/order_info/order_info' class='caidan'>
+    <image class='caidan-icon' src='/images/sys01.png'></image>
+    <text class='caidan-text'>订单信息</text>
+    <image class='caidan-arrow' src='/images/right.png'></image>
+  </navigator>
+
+  <navigator url='/pages/dish_info/dish_info' class='caidan'>
+    <image class='caidan-icon' src='/images/sys04.png'></image>
+    <text class='caidan-text'>菜品信息</text>
+    <image class='caidan-arrow' src='/images/right.png'></image>
+  </navigator>
+  <view class="Businessorrest">
+    休息
+    <van-switch checked="{{ checked }}" bind:change="onChange" />
+    营业
+  </view>
+
+</view>
+
+
+<!-- <navigator url='/pages/business/business' class='caidan'>
+  <image class='caidan-icon' src='/images/sys04.png'></image>
+  <text class='caidan-text'>我的店铺</text>
+  <image class='caidan-arrow' src='/images/right.png'></image>
+</navigator> -->

@@ -1,0 +1,177 @@
+/* pages/administrators/administrators.wxss */
+
+.administrators {
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.left {
+    width: 35%;
+    border-right: 1px solid #d4d4d4;
+    font-size: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.type-nav {
+    position: relative;
+    text-align: center;
+    line-height: 50px;
+    padding: 5px 0;
+    height: 50px;
+    border-bottom: 1px solid #d4d4d4;
+    z-index: 10;
+}
+
+.selected {
+    margin-right: -1px;
+    padding-left: -1px;
+    color: #333;
+    background-color: #fff;
+    font-weight: bold;
+}
+
+
+
+.right {
+    display: flex;
+    width: 65%;
+    padding: 5px;
+    flex-direction: column;
+
+}
+
+/* 用户管理 */
+.people_info {
+    display: flex;
+    flex-direction: row;
+}
+
+.people {
+    height: 100%;
+    /* margin-bottom: 10rpx; */
+    border-bottom: 1px solid gainsboro;
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px gainsboro;
+    /* background-color: greenyellow; */
+
+}
+
+.people_name {
+    padding-left:20rpx;
+    margin-top: 10rpx;
+}
+
+.people_pass {
+    padding-left:20rpx;
+    margin-bottom: 10rpx;
+}
+
+/* 订单管理 */
+.cps{
+    display: flex;
+    flex-direction:column;
+    box-sizing: border-box;
+    padding: 3px;
+  }
+  
+  .cp-danhao{
+    background-color: #f2f2f2;
+    font-size: 12px;
+    color: gray;
+    height: 30px;
+    line-height: 30px;
+  }
+  
+  .cp{
+    display: flex;
+    padding: 5px;
+    border-bottom: 1px solid gainsboro;
+  }
+  .cp-tupian{
+    width: 35%;
+  }
+  .cp-img{
+    width: 100%;
+    /* height: 10%; */
+    border-radius: 10%;
+  }
+  .cp-xinxi{
+    width: 65%;
+    margin-left: 7px;
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    margin: 10px 0 0 15px;
+  
+  }
+  .cp-mingcheng{
+    font-size: 16px;
+    font-weight: bold;
+    width: 95%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .cp-jiage{
+    font-size: 13px;
+    color: red;
+    margin-top: 7px;
+  }
+  .cp-shuliang{
+    width: 15%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .cp-jiesuan{
+    font-size: 12px;
+    color:gray;
+  }
+
+  /* 菜品管理 */
+.food {
+    display: flex;
+    padding: 5px;
+    width: 100%;
+    flex-direction: row;
+}
+
+.foods_img {
+    width: 35%;
+}
+
+.food_img {
+    width: 100%;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px gainsboro;
+}
+
+.food_text {
+    width: 65%;
+    margin-left: 5px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+
+.food_name {
+    font-size: 16px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.food_price {
+    font-size: 14px;
+    color: red;
+}

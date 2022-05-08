@@ -1,0 +1,39 @@
+<!--pages/dish_info/dish_info.wxml-->
+<!-- <text>pages/dish_info/dish_info.wxml</text> -->
+<scroll-view scroll-y style='height: {{winHeight -40}}px' class='gwc'>
+    <!--购物车产品列表-->
+    <block wx:for="{{foods}}" wx:key="*this">
+        <view class='sp'>
+            <view class='sp-tupian'>
+                <image class='sp-img' src='{{item.picture}}' mode="widthFix"></image>
+            </view>
+            <view class='sp-info'>
+                <view class="sp-mc">{{item.name}}</view>
+                <view class="sp-jiage">￥{{item.price}}</view>
+            </view>
+            <view class="mod">
+                <van-button custom-class="modify" bind:click="modify" data-any="{{item}}" round type="info" block>修改</van-button>
+                <van-button bind:click="delete" data-any="{{item}}" round type="info" block>删除</van-button>
+            </view>
+            <!-- <view class="sp-shuliang">
+                <view class="sp-shu">{{item.cp_shuliang}}份</view>
+            </view> -->
+        </view>
+    </block>
+</scroll-view>
+<view class="create">
+    <van-button bind:click="create" round type="info" block>添加菜品</van-button>
+</view>
+
+<van-overlay show="{{newadd == true || update == true}}">
+    <van-cell-group>
+        <van-field model:value="{{ food_name }}" label="菜品名称" placeholder="请输入菜品名称" border="{{ false }}" />
+        <van-field model:value="{{ food_price }}" label="菜品价格" placeholder="请输入菜品价格" border="{{ false }}" />
+    </van-cell-group>
+    <van-uploader preview-size="150px" file-list="{{ fileList }}" deletable="{{true}}" bind:after-read="afterRead">
+        <image class="upload-img" src="{{fileList.url}}"></image>
+    </van-uploader>
+    <van-button bind:click="commit" round type="info" block>确认并提交</van-button>
+</van-overlay>
+
+<!-- <image src="http://tmp/oxSpxW6XFo7lcbdce95f08a7fc6fb9e1cc33611f0a50.jpg"></image> -->

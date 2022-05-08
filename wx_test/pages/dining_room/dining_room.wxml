@@ -1,0 +1,25 @@
+<!-- pages/dining_room/dining_room.wxml -->
+<!-- <text>pages/dining_room/dining_room.wxml</text> -->
+<view class="dining_room">
+  <view class="left">
+    <block wx:for="{{businessList}}" wx:key="*this">
+      <text class="type-nav {{curNav == item._id ? 'selected' : ''}}" bindtap="selectNav" data-any="{{item}}" data-id="{{item.id}}">{{item.name}}</text>
+    </block>
+  </view>
+  <view class="right">
+    <block wx:for="{{food}}"  wx:key="*this">
+        <navigator url='/pages/details/details?food_id={{item._id}}&price={{item.price}}&name={{item.name}}&picture={{item.picture}}&business_id={{item.business_id}}' class='food'>
+          <view class='foods_img'>
+            <!-- <van-image custom-class="food_img" src="{{item.picture}}" /> -->
+            <image src='{{item.picture}}' class="food_img" mode="widthFix"></image>
+          </view>
+          <view class='food_text'>
+            <text class='food_name'>{{item.name}}</text>
+            <view>
+              <text class='food_price'>¥ {{item.price}}</text>
+            </view>
+          </view>
+        </navigator>
+    </block>
+  </view>
+</view>

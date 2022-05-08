@@ -1,0 +1,57 @@
+{
+  "pages":[
+    "pages/logs/logs",
+    "pages/index/index",
+    "pages/dining_room/dining_room",
+    "pages/shopcar/shopcar",
+    "pages/place_order/place_order",
+    "pages/details/details",
+    "pages/person/person",
+    "pages/person_info/person_info",
+    "pages/comment/comment",
+    "pages/evaluate/evaluate",
+    "pages/collection/collection",
+    "pages/myorder/myorder",
+    "pages/myorder_info/myorder_info",
+    "pages/business/business",
+    "pages/dish_info/dish_info",
+    "pages/order_info/order_info",
+    "pages/administrators/administrators"
+  ],
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "images/shouye-off.png",
+      "selectedIconPath": "images/shouye-on.png"
+    }, {
+      "pagePath": "pages/shopcar/shopcar",
+      "text": "购物车",
+      "iconPath": "images/gouwuche-off.png",
+      "selectedIconPath": "images/gouwuche-on.png"
+    }, {
+      "pagePath": "pages/person/person",
+      "text": "个人中心",
+      "iconPath": "images/mine-off.png",
+      "selectedIconPath": "images/mine-on.png"
+    }]
+  },
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "开饭啦！",
+    "navigationBarTextStyle":"black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-toast": "/miniprogram/miniprogram_npm/@vant/weapp/toast/index",
+    "van-field": "/miniprogram/miniprogram_npm/@vant/weapp/field/index",
+    "van-button": "/miniprogram/miniprogram_npm/@vant/weapp/button/index",
+    "van-dialog": "/miniprogram/miniprogram_npm/@vant/weapp/dialog/index",
+    "van-icon": "/miniprogram/miniprogram_npm/@vant/weapp/icon/index",
+    "van-uploader": "/miniprogram/miniprogram_npm/@vant/weapp/uploader/index",
+    "van-overlay": "/miniprogram/miniprogram_npm/@vant/weapp/overlay/index",
+    "van-switch": "/miniprogram/miniprogram_npm/@vant/weapp/switch/index",
+    "van-image": "/miniprogram/miniprogram_npm/@vant/weapp/image/index"
+  }
+}

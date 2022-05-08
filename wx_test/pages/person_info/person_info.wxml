@@ -1,0 +1,21 @@
+<!--pages/person_info/person_info.wxml-->
+<!-- <text>pages/person_info/person_info.wxml</text> -->
+<van-cell-group>
+    <van-field model:value="{{ phonenum }}" label="手机" placeholder="请输入手机号" border="{{ false }}" />
+    <van-field model:value="{{ mailbox }}" label="邮箱" placeholder="请输入邮箱" border="{{ false }}" />
+    <van-field model:value="{{ address }}" label="地址" placeholder="请输入地址" border="{{ false }}" />
+</van-cell-group>
+<van-button bind:click="commit" round type="info" block>确认并提交</van-button>
+<van-toast id="van-toast" />
+<!-- </van-cell-group>
+<form bindsubmit='userInfo'>
+    <view class='pinglun'>
+        <view>
+        
+        </view>
+        <view class='pinglun-neirong'>
+            <textarea placeholder='请输入评论，500字以内' name="neirong" auto-height></textarea>
+        </view>
+        <button class='pinglun-tijiao' form-type='submit'>提交评论</button>
+    </view>
+</form> -->

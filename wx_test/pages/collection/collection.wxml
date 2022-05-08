@@ -1,0 +1,34 @@
+<!--pages/collection/collection.wxml-->
+<!-- <text>pages/collection/collection.wxml</text> -->
+<scroll-view scroll-y class='cps'>
+    <block wx:for="{{collection}}" wx:key="*this">
+        <view class='cp-danhao'>
+            收藏店铺：{{item.business_name}} | 时间：{{item.createdAt}}
+        </view>
+        <!-- <block wx:for="{{item.food}}" wx:for-item="item2"> -->
+        <view class='cp'>
+            <view class='cp-tupian'>
+                <image class='cp-img' src='{{item.food_picture}}' mode='widthFix'></image>
+            </view>
+            <view class='cp-xinxi'>
+                <view class="cp-mingcheng">{{item.food_name}}</view>
+                <view class="cp-jiage">￥：{{item.food_price}}</view>
+            </view>
+            <!-- <view class='cp-shuliang'>
+                {{item2.count}} 份
+            </view> -->
+        </view>
+        <!-- </block> -->
+
+        <!-- <view class='cp-jiesuan'>
+            共{{item.food.length}}样菜品， 产品金额：¥{{item.cost}}
+        </view> -->
+        <!-- <wxs src="./cancel.wxs" module="cancelorder" /> -->
+        <!-- disabled='{{item.cancel == "1" ? false : true}}' -->
+        <navigator url='/pages/details/details?id={{item.food_id}}&price={{item.food_price}}&name={{item.food_name}}&picture={{item.food_picture}}&business_id={{item.business_id}}'>
+            <van-button class="cancel" bind:click="cancelorder" data-any="{{item}}" round type="info" block>去往</van-button>
+        </navigator>
+
+    </block>
+
+</scroll-view>

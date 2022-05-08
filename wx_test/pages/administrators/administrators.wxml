@@ -1,0 +1,61 @@
+<!--pages/administrators/administrators.wxml-->
+<!-- <text>pages/administrators/administrators.wxml</text> -->
+<view class="administrators">
+    <view class="left">
+        <block wx:for="{{admin}}" wx:key="*this">
+            <text class="type-nav {{curNav == item.id ? 'selected' : ''}}" bindtap="selectNav" data-any="{{item}}" data-id="{{item.id}}">{{item.name}}</text>
+        </block>
+    </view>
+    <view class="right">
+        <block wx:for="{{adminList}}" wx:if="{{curNav == 1 ? true : false}}" wx:key="*this" >
+        <view class="people">
+            <view class="people_name">
+                用户名：{{item.username}}
+            </view>
+            <view class="people_pass">
+                密码：{{item.password}}
+            </view>
+        </view>
+            
+        </block>
+        <block wx:if="{{curNav == 2 ? true : false}}">
+            <scroll-view scroll-y class='cps'>
+                <block wx:for="{{order}}" wx:key="*this">
+                    <view class='cp-danhao'>
+                        单号：{{item.order_id}} | 时间：{{item.createtime}}
+                    </view>
+                    <block wx:for="{{item.shopping_order}}" wx:for-item="item2">
+                        <view class='cp'>
+                            <view class='cp-tupian'>
+                                <image class='cp-img' src='{{item2.picture}}' mode='widthFix'></image>
+                            </view>
+                            <view class='cp-xinxi'>
+                                <view class="cp-mingcheng">{{item2.name}}</view>
+                                <view class="cp-jiage">￥：{{item2.price}}</view>
+                            </view>
+                            <view class='cp-shuliang'>
+                                {{item2.shuliang}} 件
+                            </view>
+                        </view>
+                    </block>
+                    <view class='cp-jiesuan'>
+                        共{{item.chanpinshu}}样菜品， 产品金额：¥{{item.feiyong}}
+                    </view>
+                </block>
+            </scroll-view>
+        </block>
+        <block wx:for="{{foods}}" wx:if="{{curNav == 3 ? true : false }}" wx:key="*this">
+            <view class='food'>
+                <view class='foods_img'>
+                    <image src='{{item.picture}}' class="food_img" mode="widthFix"></image>
+                </view>
+                <view class='food_text'>
+                    <text class='food_name'>{{item.name}}</text>
+                    <view>
+                        <text class='food_price'>¥ {{item.price}}</text>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>

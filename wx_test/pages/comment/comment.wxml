@@ -1,0 +1,28 @@
+<!--pages/comment/comment.wxml-->
+<!-- <text>pages/comment/comment.wxml</text> -->
+<view>
+    <block wx:for="{{comment}}" wx:key="*this">
+        <view class='pl'>
+            <view class='pl-yonghu'>
+                <view class='pl-nicheng'>{{item.user_name}}</view>
+                <view class='pl-shijian'>{{item.createdAt}}</view>
+            </view>
+            <view class="pl-show">
+                <view class="pl-dian">
+                    <view>
+                        {{item.business_name}}
+                    </view>
+                    <image src="{{item.picture}}" class="img" mode='widthFix'/>
+                </view>
+                <view class='pl-xx'>
+                    <image wx:for="iiiii++" wx:for-item="i" wx:for-index="iiiii" wx:if="{{iiiii<item.fraction_star}}" src='../../images/selected.png' class='pl-img'></image>
+                    ({{item.fraction_star}}星)
+                    <view class='pl-neirong'>{{item.content}}</view>
+                </view>
+
+            </view>
+
+
+        </view>
+    </block>
+</view>

@@ -1,0 +1,31 @@
+<!-- pages/shopcar/shopcar.wxml -->
+<!-- style='height: {{winHeight -40}}px' -->
+<scroll-view scroll-y class='header'>
+  <block wx:for="{{foods}}" wx:key="*this">
+    <view class='shopcar'>
+      <view class='food_picture'>
+      <!-- <textarea>{{item.picture}}</textarea> -->
+        <!-- <van-image wx:if="{{item.picture}}" custom-class="food_img" src="{{item.picture}}" mode="widthFix" /> -->
+        <image class='food_img' src='{{item.picture}}' mode="widthFix"></image>
+      </view>
+      <view class='food_info'>
+        <view class="food_name">{{item.food_name}}</view>
+        <view class="food_price">￥{{item.price}}</view>
+      </view>
+      <view class="food_amount">
+        <view class="food_reduce" bindtap='myjian' data-jian='{{item.count - 1}}' data-food_id='{{item.food_id}}'>-</view>
+        <view class="food_piece">{{item.count}}</view>
+        <view class="food_add" bindtap='myjia' data-jia='{{item.count*1 + 1}}' data-food_id='{{item.food_id}}'>+</view>
+      </view>
+    </view>
+  </block>
+</scroll-view>
+<view class='footer'>
+  <view class='cost' style='width:70%;'>
+    <view class='cost-picture'>
+      <image class='cost-img' src='/images/sp02.png'></image>
+    </view>
+    <view class='cost-shu'>￥{{cost}}</view>
+  </view>
+  <navigator class='settlement' url="/pages/place_order/place_order?user_oppenid={{user_oppenid}}">去结算</navigator>
+</view>

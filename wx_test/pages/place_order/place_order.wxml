@@ -1,0 +1,45 @@
+<!--pages/place_order/place_order.wxml-->
+<!-- <text>pages/place_order/place_order.wxml</text> -->
+<form bindsubmit='xiadan'>
+  <scroll-view scroll-y style='height: {{winHeight -40}}px' class='gwc'>
+    <!--购物车产品列表-->
+    <block wx:for="{{food}}" wx:key="*this">
+      <view class='sp'>
+        <view class='sp-tupian'>
+          <!-- <van-image custom-class="sp-img" :src="{{item.picture}}" mode="widthFix" /> -->
+          <image class='sp-img' src='{{item.picture}}' mode="widthFix"></image>
+        </view>
+        <view class='sp-info'>
+          <view class="sp-mc">{{item.name}}</view>
+          <view class="sp-jiage">￥{{item.price}}</view>
+        </view>
+        <view class="sp-shuliang">
+          <view class="sp-shu">{{item.count}}份</view>
+        </view>
+      </view>
+    </block>
+    <van-cell-group>
+      <van-field model:value="{{ address }}" label="地址" placeholder="请输入地址" border="{{ false }}" />
+    </van-cell-group>
+    <view class='jiesuan-liuyan'>
+      备注
+      <input type='text' class='jiesuan-liuya-neirong' name="liuyan" />
+    </view>
+
+  </scroll-view>
+
+
+
+  <view class='dibu'>
+    <view class='feiyong' style='width:60%;'>
+      <view class='feiyong-tupian'>
+        <image class='feiyong-img' src='/images/sp02.png'></image>
+      </view>
+      <view class='feiyong-shu'>￥{{cost}}</view>
+    </view>
+    <button class='caozuo' style='width:40%' form-type='submit' id='xiadan' data-caozuo='xiadan'>
+      立即点餐
+    </button>
+    <van-dialog id="van-dialog" />
+  </view>
+</form>

@@ -1,0 +1,62 @@
+/* pages/comment/comment.wxss */
+.pl {
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: white; 
+}
+
+.pl-yonghu {
+    display: flex;
+    border-bottom: 1px dotted gainsboro;
+    padding-bottom: 5px;
+}
+
+.pl-nicheng {
+    /* padding-top: 10rpx; */
+    flex-grow: 1;
+    font-size: 14px;
+}
+
+.pl-shijian {
+    font-size: 12px;
+    color: gray;
+}
+
+.pl-show {
+    height: 100px;
+}
+
+.pl-dian {
+    margin-left: 10px;
+    /* background-color: green; */
+    float: left;
+    margin-top: 10px;
+
+}
+
+.img {
+    margin-top: 10px;
+    width: 250%;
+}
+
+.pl-xx {
+    margin-top: 10rpx;
+    float: right;
+}
+
+.pl-img {
+    margin-top: 40px;
+    width: 30px;
+    height: 30px;
+}
+
+.pl-neirong {
+    margin-top: 30rpx;
+    color: gray;
+    font-size: 20px;
+}
