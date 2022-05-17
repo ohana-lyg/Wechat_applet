@@ -9,7 +9,7 @@
         <image class='food_img' src='{{item.picture}}' mode="widthFix"></image>
       </view>
       <view class='food_info'>
-        <view class="food_name">{{item.food_name}}</view>
+        <view class="food_name">{{item.name}}</view>
         <view class="food_price">￥{{item.price}}</view>
       </view>
       <view class="food_amount">

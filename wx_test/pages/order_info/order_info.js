@@ -2,8 +2,17 @@
 
 import {
     formatTime
-  } from '../../utils/util'
-import {order} from '../../data/data'
+} from '../../utils/util';
+import {
+    order
+} from '../../data/data';
+import {
+    Checkbusiness
+} from "../apis/business";
+import {
+    Checkorder
+} from "../apis/order";
+
 
 Page({
 
@@ -20,32 +29,25 @@ Page({
     onLoad: function (options) {
         var that = this;
         var user_oppenid = wx.getStorageSync('user_id');
-        wx.request({
-          url: 'http://127.0.0.1:3000/api/business/check',
-          method:"POST",
-          data: {
-              user_oppenid:user_oppenid
-          },
-          success:function(res) {
-              console.log(res);
-              console.log(res.data.list._id);
-              wx.request({
-                url: 'http://127.0.0.1:3000/api/order/check',
-                method:"POST",
-                data: {
-                    business_id:res.data.list._id
-                },
-                success:function(res1) {
-                    console.log(res1);
-                    res1.data.list.forEach(item => {
-                        item.createdAt = formatTime(item.createdAt)
-                    })
-                    that.setData({
-                      order:res1.data.list  
-                    })
-                }
-              })
-          }
+        const data = {
+            user_oppenid: user_oppenid
+        };
+        Checkbusiness(data).then(res => {
+            console.log(res);
+            console.log(res.list._id);
+
+            const data_order = {
+                business_id: res.list._id
+            };
+            Checkorder(data_order).then(res1 => {
+                console.log(res1);
+                res1.list.forEach(item => {
+                    item.createdAt = formatTime(item.createdAt)
+                })
+                that.setData({
+                    order: res1.list
+                })
+            })
         })
     },
 

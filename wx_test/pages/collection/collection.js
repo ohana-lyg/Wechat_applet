@@ -1,6 +1,11 @@
 // pages/collection/collection.js
 
-import{formatTime} from "../../utils/util";
+import {
+    formatTime
+} from "../../utils/util";
+import {
+    Checkcollection
+} from "../apis/collection";
 
 Page({
 
@@ -8,13 +13,13 @@ Page({
      * 页面的初始数据
      */
     data: {
-        collection:[]
+        collection: []
     },
 
-    cancelorder:function(event) {
+    cancelorder: function (event) {
         console.log(event.target.dataset.any);
         var food = event.target.dataset.any;
-        console.log(food.food_id);  
+        console.log(food.food_id);
     },
 
     /**
@@ -23,21 +28,17 @@ Page({
     onLoad: function (options) {
         var that = this;
         var user_oppenid = wx.getStorageSync('user_id');
-        wx.request({
-          url: 'http://127.0.0.1:3000/api/collection/check',
-          method:"POST",
-          data: {
-              user_oppenid:user_oppenid
-          },
-          success:function(res) {
-              //console.log(res.data.list);
-              res.data.list.forEach(item => {
-                  item.createdAt = formatTime(item.createdAt);
-              })
-              that.setData({
-                  collection:res.data.list
-              })
-          }
+        const data = {
+            user_oppenid: user_oppenid
+        };
+        Checkcollection(data).then(res => {
+            console.log(res);
+            res.list.forEach(item => {
+                item.createdAt = formatTime(item.createdAt);
+            })
+            that.setData({
+                collection: res.list
+            })
         })
     },
 

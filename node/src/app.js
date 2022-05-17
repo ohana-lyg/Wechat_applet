@@ -15,7 +15,7 @@ const collectionRouter = require("./routers/collection");
 const adminRouter = require("./routers/admin");
 
 const Koa = require("koa");
-const cors = require("koa2-cors");
+
 const app = new Koa();
 
 // 为应用使用中间件
@@ -41,6 +41,7 @@ app.use(async function errorHandler(ctx, next) {
   }
 });
 
+const cors = require("koa2-cors");
 app.use(
   cors({
     origin: function (ctx) {

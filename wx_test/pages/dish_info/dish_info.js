@@ -6,12 +6,15 @@ import Button from "../../miniprogram/miniprogram_npm/@vant/weapp/button/index";
 import Uploader from "../../miniprogram/miniprogram_npm/@vant/weapp/uploader/index";
 import Overlay from "../../miniprogram/miniprogram_npm/@vant/weapp/overlay/index";
 
-
-// import {
-//     food,
-//     foods,
-//     foodsList
-// } from '../../data/data'
+import {
+    Createfood,
+    Updatefood,
+    Deletefood,
+    Checkfood
+} from "../apis/food";
+import {
+    Checkbusiness
+} from "../apis/business";
 
 Page({
 
@@ -36,19 +39,30 @@ Page({
         that.setData({
             fileList: event.detail.file
         })
-        const { file } = event.detail;
+        const {
+            file
+        } = event.detail;
         // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
         wx.uploadFile({
-          url: 'https://qingfuwu.cn/dashboard/qcd2ep/contents', // 仅为示例，非真实的接口地址
-          filePath: file.url,
-          name: 'file',
-          formData: { user: 'test' },
-          success(res) {
-            // 上传完成需要更新 fileList
-            const { fileList = [] } = this.data.fileList;
-            fileList.push({ ...file, url: res.data });
-            this.setData({ fileList });
-          },
+            url: 'https://qingfuwu.cn/dashboard/qcd2ep/contents', // 仅为示例，非真实的接口地址
+            filePath: file.url,
+            name: 'file',
+            formData: {
+                user: 'test'
+            },
+            success(res) {
+                // 上传完成需要更新 fileList
+                const {
+                    fileList = []
+                } = this.data.fileList;
+                fileList.push({
+                    ...file,
+                    url: res.data
+                });
+                this.setData({
+                    fileList
+                });
+            },
         });
     },
 
@@ -62,17 +76,12 @@ Page({
     delete: function (options) {
         var that = this;
         console.log(options.target.dataset.any._id);
-        wx.request({
-            url: 'http://127.0.0.1:3000/api/food/delete',
-            method: "POST",
-            data: {
-                id: options.target.dataset.any._id
-            },
-            success: function () {
-                that.showfood();
-            }
+        const data = {
+            id: options.target.dataset.any._id
+        };
+        Deletefood(data).then(res => {
+            that.showfood();
         })
-        console.log(options.target.dataset.any);
     },
 
     modify: function (options) {
@@ -89,18 +98,14 @@ Page({
         console.log(this.data.fileList);
         if (that.data.update) {
             if (that.data.food) {
-                wx.request({
-                    url: 'http://127.0.0.1:3000/api/food/update',
-                    method: "POST",
-                    data: {
-                        id: that.data.id,
-                        name: that.data.food_name,
-                        price: that.data.food_price,
-                        picture: that.data.fileList.url
-                    },
-                    success: function () {
-                        that.showfood();
-                    }
+                const data = {
+                    id: that.data.id,
+                    name: that.data.food_name,
+                    price: that.data.food_price,
+                    picture: that.data.fileList.url
+                };
+                Updatefood(data).then(res => {
+                    that.showfood();
                 })
                 that.setData({
                     update: false,
@@ -109,34 +114,25 @@ Page({
             }
         } else {
             var user_oppenid = wx.getStorageSync('user_id');
-            wx.request({
-                url: 'http://127.0.0.1:3000/api/business/check',
-                method: "POST",
-                data: {
-                    user_oppenid: user_oppenid
-                },
-                success: function (res) {
-                    console.log(res);
-                    console.log(res.data.list._id);
-                    wx.request({
-                        url: 'http://127.0.0.1:3000/api/food/create',
-                        method: "POST",
-                        data: {
-                            name: that.data.food_name,
-                            price: that.data.food_price,
-                            picture: that.data.fileList.url,
-                            business_id: res.data.list._id
-                        },
-                        success: function () {
-                            that.showfood();
-                        }
-                    }) 
-                    that.setData({
-                        newadd: false,
-                        fileList: []
-                    })
-                }
-
+            const data = {
+                user_oppenid: user_oppenid
+            };
+            Checkbusiness(data).then(res => {
+                console.log(res);
+                console.log(res.list._id);
+                const data_food = {
+                    name: that.data.food_name,
+                    price: that.data.food_price,
+                    picture: that.data.fileList.url,
+                    business_id: res.list._id
+                };
+                Createfood(data_food).then(res => {
+                    that.showfood();
+                })
+                that.setData({
+                    newadd: false,
+                    fileList: []
+                })
             })
         }
     },
@@ -144,30 +140,22 @@ Page({
     showfood: function () {
         var that = this;
         var user_oppenid = wx.getStorageSync('user_id');
-        wx.request({
-            url: 'http://127.0.0.1:3000/api/business/check',
-            method: "POST",
-            data: {
-                user_oppenid: user_oppenid
-            },
-            success: function (res) {
-                console.log(res);
-                console.log(res.data.list._id);
-                wx.request({
-                    url: 'http://127.0.0.1:3000/api/food/check',
-                    method: "POST",
-                    data: {
-                        business_id: res.data.list._id
-                    },
-                    success: function (res1) {
-                        console.log(res1);
-                        that.setData({
-                            foods: res1.data.list
-                        })
-                        console.log(res1.data.list);
-                    }
+        const data = {
+            user_oppenid: user_oppenid
+        };
+        Checkbusiness(data).then(res => {
+            console.log(res);
+            console.log(res.list._id);
+            const data_food = {
+                business_id: res.list._id
+            };
+            Checkfood(data_food).then(res1 => {
+                console.log(res1);
+                that.setData({
+                    foods: res1.list
                 })
-            }
+                console.log(res1.list);
+            })
         })
     },
 

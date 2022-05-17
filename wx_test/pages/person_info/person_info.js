@@ -3,6 +3,7 @@
 import Toast from "../../miniprogram/miniprogram_npm/@vant/weapp/toast/toast";
 import FieId from "../../miniprogram/miniprogram_npm/@vant/weapp/field/index";
 import Button from "../../miniprogram/miniprogram_npm/@vant/weapp/button/index";
+import {Checkuser,Updateuser} from "../apis/user";
 
 Page({
 
@@ -19,19 +20,15 @@ Page({
     commit() {
        var that = this;
        var user_oppenid = wx.getStorageSync('user_id');
-       wx.request({
-         url: 'http://127.0.0.1:3000/api/user/update',
-         method:"PUT",
-         data: {
-             user_oppenid:user_oppenid,
-             phonenum:that.data.phonenum,
-             address:that.data.address,
-             mailbox:that.data.mailbox
-         },
-         success:function() {
+        const data = {
+            user_oppenid:user_oppenid,
+            phonenum:that.data.phonenum,
+            address:that.data.address,
+            mailbox:that.data.mailbox
+        };
+        Updateuser(data).then(res => {
             Toast('修改成功');
-        }
-       })
+        })
        //console.log(that.data);
     },
 
@@ -57,20 +54,15 @@ Page({
     onShow: function () {
         var that = this;
         var user_oppenid = wx.getStorageSync('user_id');
-        wx.request({
-          url: 'http://127.0.0.1:3000/api/user/check',
-          method:"POST",
-          data: {
-              user_oppenid:user_oppenid
-          },
-          success:function(res) {
-              that.setData({
-                  phonenum:res.data.list.phonenum,
-                  address:res.data.list.address,
-                  mailbox:res.data.list.mailbox
-              })
-              //console.log(res);
-          }
+        const data = {
+            user_oppenid:user_oppenid
+        };
+        Checkuser(data).then(res => {
+            that.setData({
+                phonenum:res.list.phonenum,
+                address:res.list.address,
+                mailbox:res.list.mailbox
+            })
         })
     },
 

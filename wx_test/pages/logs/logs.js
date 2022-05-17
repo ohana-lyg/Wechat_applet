@@ -1,6 +1,7 @@
 // pages/logs/logs.js
 
 // import Toast from "../../miniprogram/miniprogram_npm/@vant/weapp/toast/toast";
+import {Checkuser} from "../apis/user";
 
 Page({
     data: {
@@ -30,38 +31,34 @@ Page({
                             },
                             method: "GET",
                             success: function (res) {
-                                myid = res.data.openid
-                                wx.request({
-                                    url: 'http://127.0.0.1:3000/api/user/check',
-                                    method: "POST",
-                                    data: {
-                                        username: myname,
-                                        user_oppenid: myid,
-                                    },
-                                    success: function (res) {
-                                        //返回信息写入缓存
-                                        wx.setStorage({
-                                            key: 'user_login',
-                                            data: 'yes',
-                                            success: function () {
-                                                console.log("写入缓存成功")
-                                            }
-                                        })
-                                        wx.setStorage({
-                                            key: 'user_id',
-                                            data: res.data.list.user_oppenid,
-                                            success: function () {
-                                                wx.reLaunch({
-                                                    url: '/pages/logs/logs',
-                                                })
-                                            }
-                                        })
-                                        wx.setStorage({
-                                            key: 'user_name',
-                                            data: res.data.list.username,
-                                            //data: "",
-                                        })
-                                    }
+                                myid = res.data.openid;
+                                const data = {
+                                    username: myname,
+                                    user_oppenid: myid,
+                                };
+                                Checkuser(data).then(res => {
+                                    //返回信息写入缓存
+                                    wx.setStorage({
+                                        key: 'user_login',
+                                        data: 'yes',
+                                        success: function () {
+                                            console.log("写入缓存成功")
+                                        }
+                                    })
+                                    wx.setStorage({
+                                        key: 'user_id',
+                                        data: res.list.user_oppenid,
+                                        success: function () {
+                                            wx.reLaunch({
+                                                url: '/pages/logs/logs',
+                                            })
+                                        }
+                                    })
+                                    wx.setStorage({
+                                        key: 'user_name',
+                                        data: res.list.username,
+                                        //data: "",
+                                    })
                                 })
                             }
                         })

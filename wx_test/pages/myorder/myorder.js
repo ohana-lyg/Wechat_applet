@@ -2,6 +2,13 @@
 import {
   formatTime,
 } from '../../utils/util'
+import {
+  Checkorder,
+  Updateorder
+} from "../apis/order";
+import {
+  Checkbusiness
+} from "../apis/business";
 
 import Button from "../../miniprogram/miniprogram_npm/@vant/weapp/button/index";
 import Dialog from '../../miniprogram/miniprogram_npm/@vant/weapp/dialog/dialog';
@@ -31,21 +38,7 @@ Page({
           title: '订单已超过15分钟',
           message: '无法取消订单',
         })
-        .then(() => {
-          // console.log(options.target.dataset.any._id);
-          // wx.request({
-          //   url: 'http://127.0.0.1:3000/api/order/update',
-          //   method: "PUT",
-          //   data: {
-          //     cancel: "1",
-          //     _id: options.target.dataset.any._id
-          //   },
-          //   success: function (res) {
-          //     console.log(res);
-          //     that.showorder();
-          //   }
-          // })
-        })
+        .then(() => {})
         .catch(() => {
           // on cancel
         })
@@ -56,17 +49,13 @@ Page({
         })
         .then(() => {
           console.log(options.target.dataset.any._id);
-          wx.request({
-            url: 'http://127.0.0.1:3000/api/order/update',
-            method: "PUT",
-            data: {
-              cancel: "1",
-              _id: options.target.dataset.any._id
-            },
-            success: function (res) {
-              console.log(res);
-              that.showorder();
-            }
+          const data = {
+            cancel: "1",
+            _id: options.target.dataset.any._id
+          };
+          Updateorder(data).then(res => {
+            console.log(res);
+            that.showorder();
           })
         })
         .catch(() => {
@@ -77,19 +66,14 @@ Page({
 
   comment: function (options) {
     console.log(options.target.dataset.any);
-    wx.setStorageSync('order_food', options.target.dataset.any)
-    wx.request({
-      url: 'http://127.0.0.1:3000/api/business/check',
-      method: "POST",
-      data: {
-        business_id: options.target.dataset.any.business_id
-      },
-      success: function (res) {
-        //console.log(res.data.list.name);
-        wx.setStorageSync('business_name', res.data.list.name)
-      }
+    wx.setStorageSync('order_food', options.target.dataset.any);
+    const data = {
+      business_id: options.target.dataset.any.business_id
+    };
+    Checkbusiness(data).then(res => {
+      console.log(res.list.name);
+      wx.setStorageSync('business_name', res.list.name)
     })
-    //wx.set
   },
 
   showorder: function () {
@@ -101,21 +85,17 @@ Page({
         that.setData({
           user_id: res.data
         })
-        wx.request({
-          url: 'http://127.0.0.1:3000/api/order/check',
-          method: "POST",
-          data: {
-            user_oppenid: res.data
-          },
-          success: function (res2) {
-            console.log(res2.data)
-            res2.data.list.forEach(item => {
-              item.createdAt = formatTime(item.createdAt)
-            })
-            that.setData({
-              order: res2.data.list
-            })
-          }
+        const data = {
+          user_oppenid: res.data
+        };
+        Checkorder(data).then(res2 => {
+          console.log(res2.list)
+          res2.list.forEach(item => {
+            item.createdAt = formatTime(item.createdAt)
+          })
+          that.setData({
+            order: res2.list
+          })
         })
       },
     })

@@ -2,6 +2,10 @@
 import {
     formatTime
 } from "../../utils/util"
+import {
+    Checkcomment
+} from "../apis/comment";
+
 
 Page({
 
@@ -9,7 +13,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        comment:[],
+        comment: [],
     },
 
     /**
@@ -17,29 +21,21 @@ Page({
      */
     onLoad: function (options) {
         var that = this;
-        var user_oppenid = wx.getStorageSync('user_id')
-        wx.request({
-            url: 'http://127.0.0.1:3000/api/comment/check',
-            method: "POST",
-            data: {
-                user_oppenid: user_oppenid
-            },
-            success: function (res) {
-                console.log(res);
-                f = res.data.list;
-                f.forEach(item => {
-                    item.createdAt = formatTime(item.createdAt);
-                })
-                console.log(f[0].business_name);
-                that.setData({
-                    comment: f
-                })
-            }
+        var user_oppenid = wx.getStorageSync('user_id');
+        const data = {
+            user_oppenid: user_oppenid
+        };
+        Checkcomment(data).then(res => {
+            console.log(res);
+            f = res.list;
+            f.forEach(item => {
+                item.createdAt = formatTime(item.createdAt);
+            })
+            console.log(f[0].business_name);
+            that.setData({
+                comment: f
+            })
         })
-        
-        // wx.request({
-        //   url: 'url',
-        // })
         wx.setNavigationBarTitle({
             title: options.name,
         })

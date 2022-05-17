@@ -4,6 +4,18 @@ import FieId from "../../miniprogram/miniprogram_npm/@vant/weapp/field/index";
 import Dialog from '../../miniprogram/miniprogram_npm/@vant/weapp/dialog/dialog';
 
 import {
+  Createorder
+} from "../apis/order";
+import {
+  Deleteshopcar,
+  Getshopcar
+} from "../apis/shopcar";
+import {
+  Checkfood
+} from "../apis/food";
+import {Checkuser} from "../apis/user";
+
+import {
   foods
 } from "../../data/data"
 
@@ -47,39 +59,27 @@ Page({
             fo.forEach(item2 => {
               money += item2.count * item2.price;
             })
-            wx.request({
-              url: 'http://127.0.0.1:3000/api/order/create',
-              method: "POST",
-              data: {
-                user_oppenid: user_oppenid,
-                food: fo,
-                address: that.data.address,
-                business_id: item.business_id,
-                cost: money,
-                user_name: user_name,
-                message: event.detail.value.liuyan
-              },
-              success: function () {
-                // wx.switchTab({
-                //   url: '/pages/index/index',
-                // })
-              },
+            const data = {
+              user_oppenid: user_oppenid,
+              food: fo,
+              address: that.data.address,
+              business_id: item.business_id,
+              cost: money,
+              user_name: user_name,
+              message: event.detail.value.liuyan
+            };
+            Createorder(data).then(res => {
+              console.log(res);
             })
-            // console.log("下单处理")
-            // console.log(event.detail.value)
-            // console.log("用户id:" + user_oppenid)
-            // console.log(that.data.food);
-            // console.log(that.data.cost);
           })
           wx.switchTab({
             url: '/pages/index/index',
           })
-          wx.request({
-            url: 'http://127.0.0.1:3000/api/shopcar/delete',
-            method: "POST",
-            data: {
-              user_oppenid: user_oppenid
-            }
+          const data_shopcar = {
+            user_oppenid: user_oppenid
+          };
+          Deleteshopcar(data_shopcar).then(res => {
+            console.log(res);
           })
         })
         .catch(() => {
@@ -95,50 +95,42 @@ Page({
     var that = this;
     console.log(options);
     if (options.user_oppenid) {
-      wx.request({
-        url: 'http://127.0.0.1:3000/api/shopcar/listAll',
-        method: "POST",
-        data: {
-          user_oppenid: options.user_oppenid
-        },
-        success: function (res) {
-          //console.log(res);
-          var money = 0;
-          res.data.list.forEach(item => {
-            money += item.count * item.price;
-          })
-          //console.log(money);
-          that.setData({
-            cost: money
-          })
-          that.setData({
-            food: res.data.list
-          })
-        }
+      const data = {
+        user_oppenid: options.user_oppenid
+      };
+      Getshopcar(data).then(res => {
+        console.log(res);
+        var money = 0;
+        res.list.forEach(item => {
+          money += item.count * item.price;
+        })
+        //console.log(money);
+        that.setData({
+          cost: money
+        })
+        that.setData({
+          food: res.list
+        })
       })
     } else {
-      wx.request({
-        url: 'http://127.0.0.1:3000/api/food/check',
-        method: "POST",
-        data: {
-          business_id: options.business_id
-        },
-        success: function (res) {
-          f = res.data.list.filter(item => item._id == options.food_id);
-          //console.log(f);
-          var money = f[0].price;
-          //console.log(money);
-          f.forEach(item => {
-            item.count = 1;
-            item.food_id = options.food_id;
-          })
-          that.setData({
-            food: f
-          })
-          that.setData({
-            cost: money
-          })
-        }
+      const data = {
+        business_id: options.business_id
+      };
+      Checkfood(data).then(res => {
+        f = res.list.filter(item => item._id == options.food_id);
+        //console.log(f);
+        var money = f[0].price;
+        //console.log(money);
+        f.forEach(item => {
+          item.count = 1;
+          item.food_id = options.food_id;
+        })
+        that.setData({
+          food: f
+        })
+        that.setData({
+          cost: money
+        })
       })
     }
   },
@@ -155,18 +147,14 @@ Page({
    */
   onShow: function () {
     var that = this;
-    var user_oppenid = wx.getStorageSync('user_id')
-    wx.request({
-      url: 'http://127.0.0.1:3000/api/user/check',
-      method: "POST",
-      data: {
-        user_oppenid: user_oppenid
-      },
-      success: function (res) {
-        that.setData({
-          address: res.data.list.address
-        })
-      }
+    var user_oppenid = wx.getStorageSync('user_id');
+    const data = {
+      user_oppenid: user_oppenid
+    };
+    Checkuser(data).then(res => {
+      that.setData({
+        address: res.list.address
+      })
     })
   },
 
