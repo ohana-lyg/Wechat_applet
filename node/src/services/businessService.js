@@ -45,15 +45,18 @@ class businessService {
     }
   }
   async check(businessInfo) {
+    console.log(businessInfo);
     if (businessInfo.user_oppenid) {
       const business = await businessTable
         .where({ user_oppenid: businessInfo.user_oppenid })
         .findOne();
-      if (!business) {
-        const error = new Error(`business:${id} not found`);
-        error.status = 404;
-        throw error;
-      }
+      // if (!business) {
+      //   const message = "你未注册店铺";
+      //   return message;
+      //   const error = new Error(`business:${id} not found`);
+      //   error.status = 404;
+      //   throw error;
+      // }
       return business;
     } else {
       const business = await businessTable

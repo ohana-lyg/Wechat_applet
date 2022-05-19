@@ -4,8 +4,9 @@ import {
   Createbusiness,
   Checkbusiness,
 } from "../apis/business";
-import Getdining_room from "../apis/dining_room";
+import {Getdining_room} from "../apis/dining_room";
 import Switch from "../../miniprogram/miniprogram_npm/@vant/weapp/switch/index";
+import Loading from "../../miniprogram/miniprogram_npm/@vant/weapp/loading/index";
 
 Page({
 
@@ -14,6 +15,7 @@ Page({
    */
   data: {
     shop: "",
+    show:"",
     businesss_name: '',
     dining_room: '',
     checked: true
@@ -41,8 +43,8 @@ Page({
     var user_oppenid = wx.getStorageSync('user_id');
     console.log(that.data.businesss_name);
     Getdining_room().then(res => {
-      //console.log(res);
-      const dining = res.data.list.filter(item => item.name == that.data.dining_room);
+      console.log(res);
+      const dining = res.list.filter(item => item.name == that.data.dining_room);
       //console.log(dining[0]._id);
       const data = {
         user_oppenid: user_oppenid,
@@ -53,7 +55,8 @@ Page({
       };
       Createbusiness(data).then(res => {
         that.setData({
-          shop: false
+          shop: false,
+          show: true
         })
       })
     })
@@ -67,21 +70,30 @@ Page({
     };
     Checkbusiness(data).then(res => {
       console.log(res);
-      console.log(res.list.rest);
-      if (res.list.examine) {
-        that.setData({
-          shop: true,
-        })
-        if (res.list.rest) {
+      //console.log(res.list.rest);
+      if(res.list) {
+        if (res.list.examine) {
           that.setData({
-            checked: true
+            shop: true,
+            show: false
           })
+          if (res.list.rest) {
+            that.setData({
+              checked: true
+            })
+          } else {
+            that.setData({
+              checked: false
+            })
+          }
         } else {
           that.setData({
-            checked: false
+            shop: false,
+            show: true
           })
         }
-      }
+      } 
+      
     })
   },
 

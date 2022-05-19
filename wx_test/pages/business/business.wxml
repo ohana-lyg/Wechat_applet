@@ -1,11 +1,16 @@
 <!--pages/business/business.wxml-->
 <!-- <text>pages/business/business.wxml</text> -->
 <view wx:if="{{shop == ''}}">
-  <van-cell-group>
-    <van-field model:value="{{ businesss_name }}" label="店铺" placeholder="请输入店铺名" border="{{ false }}" />
-    <van-field model:value="{{ dining_room }}" label="所属食堂" placeholder="请输入入驻食堂" border="{{ false }}" />
-  </van-cell-group>
-  <van-button bind:click="commit" round type="info" block>确认并提交</van-button>
+  <view wx:if="{{show == ''}}">
+    <van-cell-group>
+      <van-field model:value="{{ businesss_name }}" label="店铺" placeholder="请输入店铺名" border="{{ false }}" />
+      <van-field model:value="{{ dining_room }}" label="所属食堂" placeholder="请输入入驻食堂" border="{{ false }}" />
+    </van-cell-group>
+    <van-button bind:click="commit" round type="info" block>确认并提交</van-button>
+  </view>
+  <view wx:else>
+    <van-loading custom-class="load" size="24px">管理员审核中...</van-loading>
+  </view>
 </view>
 <view wx:else>
   <navigator url='/pages/order_info/order_info' class='caidan'>

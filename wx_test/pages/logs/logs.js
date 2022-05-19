@@ -30,13 +30,13 @@ Page({
                                 grant_type: 'authorization_code'
                             },
                             method: "GET",
-                            success: function (res) {
-                                myid = res.data.openid;
+                            success: function (res1) {
+                                myid = res1.data.openid;
                                 const data = {
                                     username: myname,
                                     user_oppenid: myid,
                                 };
-                                Checkuser(data).then(res => {
+                                Checkuser(data).then(res2 => {
                                     //返回信息写入缓存
                                     wx.setStorage({
                                         key: 'user_login',
@@ -47,7 +47,7 @@ Page({
                                     })
                                     wx.setStorage({
                                         key: 'user_id',
-                                        data: res.list.user_oppenid,
+                                        data: res2.list.user_oppenid,
                                         success: function () {
                                             wx.reLaunch({
                                                 url: '/pages/logs/logs',
@@ -56,7 +56,7 @@ Page({
                                     })
                                     wx.setStorage({
                                         key: 'user_name',
-                                        data: res.list.username,
+                                        data: res2.list.username,
                                         //data: "",
                                     })
                                 })

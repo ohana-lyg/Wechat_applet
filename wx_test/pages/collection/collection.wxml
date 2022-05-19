@@ -15,7 +15,7 @@
                 <view class="cp-jiage">￥：{{item.food_price}}</view>
             </view>
         </view>
-        <navigator url='/pages/details/details?id={{item.food_id}}&price={{item.food_price}}&name={{item.food_name}}&picture={{item.food_picture}}&business_id={{item.business_id}}'>
+        <navigator url='/pages/details/details?food_id={{item.food_id}}&price={{item.food_price}}&name={{item.food_name}}&picture={{item.food_picture}}&business_id={{item.business_id}}'>
             <van-button class="cancel" bind:click="cancelorder" data-any="{{item}}" round type="info" block>去往</van-button>
         </navigator>
 

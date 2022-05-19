@@ -37,6 +37,7 @@ app.use(async function errorHandler(ctx, next) {
     // 抛出的错误可以附带 status 字段，代表 http 状态码
     // 若没有提供，则默认状态码为 500，代表服务器内部错误
     ctx.status = err.status || 500;
+    console.log(err.message);
     ctx.body = { error: err.message };
   }
 });

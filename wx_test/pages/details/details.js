@@ -171,7 +171,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options);
     var that = this;
     wx.setStorageSync('food', options)
     console.log(options);
@@ -183,7 +183,7 @@ Page({
       business_id: business_id
     };
     Checkfood(data_food).then(res => {
-      f = res.list.filter(item => item._id == options.id);
+      f = res.list.filter(item => item._id == options.food_id);
         that.setData({
           food: f
         })
@@ -191,9 +191,9 @@ Page({
 
     // console.log(date);
     //获取评论信息
-    console.log(options.id);
+    console.log(options.food_id);
     const data_comment = {
-      food_id: options.id
+      food_id: options.food_id
     };
     Checkcomment(data_comment).then(res => {
       console.log(res);
@@ -210,7 +210,7 @@ Page({
     var user_oppenid = wx.getStorageSync('user_id');
     const data_collection = {
       user_oppenid: user_oppenid,
-      food_id: options.id,
+      food_id: options.food_id,
     };
     Checkcollection(data_collection).then(res => {
       console.log(res);
@@ -231,12 +231,12 @@ Page({
         res.list.forEach(item => {
           item.food.forEach(item1 => {
             if (item1.food_id) {
-              if (item1.food_id == options.id) {
+              if (item1.food_id == options.food_id) {
                 count += item1.count;
                 console.log(count);
               }
             } else {
-              if (item1._id == options.id) {
+              if (item1._id == options.food_id) {
                 count += item1.count;
                 console.log(count);
               }
